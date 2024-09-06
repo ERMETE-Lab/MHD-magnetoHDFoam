@@ -1,0 +1,3 @@
+magnetoHDFoam.C
+
+EXE = $(FOAM_APPBIN)/magnetoHDFoam
