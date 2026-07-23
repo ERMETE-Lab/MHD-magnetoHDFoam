@@ -1,0 +1,73 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      thermophysicalProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+/*
+thermoType0
+{
+    type            heRhoThermo;
+    mixture         pureMixture;
+    properties      liquid;
+    energy          sensibleInternalEnergy;
+}
+
+mixture0
+{
+    H2O;
+}
+*/
+thermoType //heRhoThermo  pureMixture  polynomial  hPolynomial  icoPolynomial  specie  sensibleInternalEnergy
+{
+    type            heRhoThermo;
+    mixture         pureMixture;
+    transport       const;
+    thermo          hConst;
+    equationOfState rhoConst;
+    specie          specie;
+    energy          sensibleInternalEnergy;
+}
+
+mixture
+{
+    specie
+    {
+        molWeight       173; // 83% Pb - 17% Li
+    }
+    equationOfState
+    {
+	//rhoCoeffs<8>	(1276 -1.689 3.989e-3 -4.8e-6 0 0 0 0); //SONO I COEFF. PER GRADO DI T CRESCENTE DA 0 A 7 PER ACQUA
+	//beta		1e-10; //2.3e-4;
+	//T0		273.15;
+        rho             9806;
+	//psi		1e-10;
+	//p0		100000;
+    }
+    thermodynamics
+    {
+	Cp		189.5;
+        //CpCoeffs<8>	(6916 -11.63 8.461e-3 0 0 0 0 0);
+        //Sf              1222;
+	Hf		22.4e3;
+    }
+    transport
+    {
+	mu		1.93e-3;
+	Pr		0.0175; // k = 20.93 W/(m*K)   # cp*mu/k
+        //muCoeffs<8>	(2e-2 0 0 0 0 0 0 0);//(4.505e-3 2.406e-5 4.465e-8 2.811e-11 0 0 0 0);
+        //kappaCoeffs<8>	(-0.1941 4.301e-3 5.208e-6 0 0 0 0 0);
+    }
+}
+
+// ************************************************************************* //
